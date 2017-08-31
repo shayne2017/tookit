@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>图片效果</title>
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.3/jquery.min.js"></script>
+    <style>
+        .banner1:before{
+            content: "";
+            position: absolute;
+            left: -600px;
+            top: -600px;
+            width: 200px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, .6);
+
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            -ms-transform: rotate(-45deg);
+            -o-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+
+            -webkit-animation: searchLights 0.6s 0s ease-in 1;
+            -o-animation: searchLights 0.6s 0s ease-in 1;
+            animation: searchLights 0.6s 0s ease-in 1;
+
+        }
+        @-webkit-keyframes searchLights {
+            0% {
+                left: -100px;
+                top: 0;
+            }
+            to {
+                left: 220px;
+                top: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="banner">
+    <img src="http://bbs.zizhuxuexi.cn/static/image/fg_hlximg/logo.png" alt=""/>
+</div>
+<script>
+    $(document).ready(function(){
+        $(".banner").mouseover(function(){
+            $(this).addClass("banner1");
+        });
+        $(".banner").mouseout(function(){
+            $(this).removeClass("banner1");
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+    .rewards {
+        position: relative;
+        top: 200px;
+        left: 50%;
+        transform: translate(-50%);
+        -webkit-transform: translate(-50%);
+        width: 150px;
+        height: 150px;
+        border: 1px solid #ccc;
+        text-align: center;
+        font-size: 12px;
+        line-height: 50px;
+    }
+
+    .lottery,
+    .start {
+        width: 50px;
+        height: 50px;
+        float: left;
+        box-sizing: border-box;
+        border: 1px solid #f0f0f0;
+    }
+
+    .start:hover {
+        cursor: pointer;
+        background: #f9f9f9;
+    }
+
+    .current {
+        background-color: #00ff00;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="rewards">
+        <div class="lottery lottery1">1</div>
+        <div class="lottery lottery2">2</div>
+        <div class="lottery lottery3">3</div>
+        <div class="lottery lottery8">8</div>
+        <div class="start">开始抽奖</div>
+        <div class="lottery lottery4">4</div>
+        <div class="lottery lottery7">7</div>
+        <div class="lottery lottery6">6</div>
+        <div class="lottery lottery5">5</div>
+    </div>
+    <script>
+    $(function() {
+
+        function getRewards() { //抽奖主逻辑
+            if (typeof(currentPoint) == "undefined") {
+                currentPoint = 0;
+            }
+            currentPoint++;
+            if (currentPoint <= low) {
+                rotateSpeed = rotateSpeed - 20;
+                if (rotateSpeed < 20) {
+                    rotateSpeed = 20;
+                }
+            } else if (currentPoint > normal) {
+                rotateSpeed = rotateSpeed + 40;
+            }
+            // console.log(rotateSpeed);
+            starting = true;
+
+            if (typeof(i) == "undefined") {
+                i = 0;
+            }
+
+            if (circle > 0) {
+                $(".lottery").removeClass("current");
+                if (i <= 7) {
+                    i++;
+                    $(".lottery" + i).addClass("current");
+                } else {
+                    i = 1;
+                    circle--;
+                    $(".lottery" + i).addClass("current");
+                }
+            } else {
+                if (i < myRewards) {
+                    $(".lottery").removeClass("current");
+                    i++;
+                    $(".lottery" + i).addClass("current");
+                } else {
+                    clearInterval(t);
+                    i = 0;
+                    starting = false;
+                    circle = 4;
+                    rotateSpeed = 300;
+                    currentPoint = 0;
+                    return;
+                }
+            }
+
+            t = setTimeout(getRewards, rotateSpeed);
+        }
+
+        function chance(a, b, c, d, e, f, g) { //a=>1等奖概率 b=>2等奖概率 c=>3等奖概率 d=>加速节点 e=>减速节点 f=>基本圈数 g=>旋转开始的初始速度
+        
+            rotateSpeed = g; //旋转初始速率
+            var a = a * 1000;
+            var b = b * 1000;
+            var c = c * 1000;
+            myRewards = Math.floor(Math.random() * 1000) + 1;
+            if (myRewards < a) {
+                myRewards = 1;
+            } else if (myRewards >= a && myRewards < (a + b)) {
+                myRewards = 2;
+            } else if (myRewards >= (a + b) && myRewards < (a + b + c)) {
+                myRewards = 3;
+            } else {
+                myRewards = Math.floor(Math.random() * (lotteryCount - 3)) + 4;
+            }
+            circle = f; //中奖前旋转的基本圈数
+            countPoint = f * lotteryCount + myRewards; //旋转总个数
+            low = countPoint / d; //加速截止点
+            normal = countPoint / e; //减速开始点
+            console.log("中奖产品：" + myRewards);
+            getRewards(myRewards);//参数为中奖产品顺序
+        }
+
+        $(".start").on("click", function() { //抽奖入口
+            var init = [0.01, 0.03, 0.06, 3, 1.3, 4, 300]; //设置抽奖参数
+            if (typeof(starting) == "undefined") {
+                chance(init[0], init[1], init[2], init[3], init[4], init[5], init[6]);
+            } else {
+                if (!starting) {
+                    chance(init[0], init[1], init[2], init[3], init[4], init[5], init[6]);
+                }
+            }
+
+        });
+
+    });
+    </script>
+</body>
+
+</html>

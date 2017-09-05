@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/gsap/latest/TweenMax.min.js"></script>
+    <script src="CustomEase.min.js"></script>
+    <style>
+    .reward {
+        position: relative;
+        width: 340px;
+        height: 340px;
+        background: url("img/201708230838076.png") no-repeat;
+        background-size: 100% 100%;
+        border: 1px solid #ccc;
+    }
+
+    .needle,
+    .need {
+        position: absolute;
+        left: 50%;
+        top: 73px;
+        transform: translate(-50%);
+        -webkit-transform: translate(-50%);
+    }
+
+    .need {
+        width: 186px;
+        height: 186px;
+        background: transparent;
+        appearance: none;
+        -webkit-appearance: none;
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        border: none;
+        outline: 0;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="reward">
+        <img src="img/201708230838077.png" alt="" class="needle">
+        <button class="need" id="nav"></button>
+    </div>
+    <script>
+    $(function() {
+        var xxx = 360;
+        $(".need").on("click", function() {
+            var randomNum = Math.floor(Math.random() * 6);
+            switch (randomNum) {
+                case 0:
+                    getRotation = 0;
+                    console.log("奖品1");
+                    break;
+                case 1:
+                    getRotation = 60;
+                    console.log("奖品2");
+                    break;
+                case 2:
+                    getRotation = 120;
+                    console.log("奖品3");
+                    break;
+                case 3:
+                    getRotation = 180;
+                    console.log("奖品4");
+                    break;
+                case 4:
+                    getRotation = 240;
+                    console.log("奖品5");
+                    break;
+                case 5:
+                    getRotation = 300;
+                    console.log("奖品6");
+                    break;
+            }
+
+            maxRotation = xxx + getRotation;
+            $(".need").attr("disabled", true);
+            tMax = new TimelineMax();
+
+            tMax.to(".needle", 5, {
+                rotation: maxRotation,
+                ease: CustomEase.create("custom", "M0,0,C0.164,-0.01,0.154,0.321,0.188,0.472,0.24,0.706,0.154,1,1,1"),
+                onStart: start,
+                onUpdate: update,
+                onComplete: complete
+            }, 0);
+
+            function start() {
+                console.log('开始');
+            }
+
+            function update() {
+                var nn = tMax.resume();
+                // console.log(nn);
+            }
+
+            function complete() {
+                console.log('结束');
+                var yyy = maxRotation % xxx;
+                console.log(yyy);
+                tMax.set(".needle", { rotation: yyy });
+                $(".need").attr("disabled", false);
+            }
+        });
+    });
+    </script>
+</body>
+
+</html>

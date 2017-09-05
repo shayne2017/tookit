@@ -66,10 +66,10 @@
         // 参数定义=============================================begin
 
         //sudoku函数各参数定义如下：
-        var circle = 20; //旋转的基础圈数
-        var rotateSpeed = 120; //初始旋转速度，建议为大于20的整数
+        var circle = 26; //旋转的基础圈数
+        var rotateSpeed = 80; //初始旋转速度，建议为大于20的整数
         var lowSpeed = 0.4; //加速截止点，0~1之间的小数，应小于highSpeed
-        var highSpeed = 0.91; //减速开始点，0~1之间的小数，应大于lowSpeed
+        var highSpeed = 0.92; //减速开始点，0~1之间的小数，应大于lowSpeed
         var addRateSpeed = 3 //加速速率，应大于0
         var loseRateSpeed = 60 //减速速率，应大于0
         var prize1 = 0.01; //一等奖概率，0~1之间的小数
@@ -77,9 +77,10 @@
         var prize3 = 0.1; //三等奖概率，0~1之间的小数
         var start0 = false; //设置每次抽奖是否从第一个开始，true为从第一个开始，false则从当前位置开始
         var maxLottery = 3; //设置最大抽奖次数
-        // winPrice = 3; //当从接口获取中将物品时，可设置此值，如为本地版，请注释此行
+        // winPrice = 3; //当从接口获取中奖物品时，可设置此值，如为本地版，请注释此行
 
         // 参数定义=============================================end 
+        
         sudoku(circle, rotateSpeed, lowSpeed, highSpeed, addRateSpeed, loseRateSpeed, prize1, prize2, prize3, start0, maxLottery);  
         function sudoku(circle, rotateSpeed, lowSpeed, highSpeed, addRateSpeed, loseRateSpeed, prize1, prize2, prize3, start0, maxLottery, winPrice) {
             var circle_resert = circle; //重置基础圈数
@@ -132,7 +133,7 @@
                             i = 0;
                         }
                         clearInterval(t);
-                        console.log("恭喜，你获得了" + myRewards + "等奖");
+                        alert("恭喜，你获得了" + myRewards + "等奖");
                         return;
                     }
                 }

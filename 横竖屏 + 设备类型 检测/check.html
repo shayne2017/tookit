@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+    /*wap端横竖屏=======begin*/
+    .mod-orient-layer {
+        display: none;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        background: #333;
+        z-index: 9997;
+    }
+
+    .mod-orient-layer__content {
+        position: absolute;
+        width: 100%;
+        top: 45%;
+        margin-top: -75px;
+        text-align: center;
+    }
+
+    .mod-orient-layer__icon-orient {
+        background: url('img/scalePhone.png') no-repeat;
+        display: inline-block;
+        width: 67px;
+        height: 109px;
+        transform: rotate(90deg);
+        -webkit-transform: rotate(90deg);
+        -webkit-animation: rotation infinite 1.5s ease-in-out;
+        animation: rotation infinite 1.5s ease-in-out;
+        background-size: 67px;
+    }
+
+    @-webkit-keyframes rotation {
+        from {
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+        }
+        50% {
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+        }
+    }
+
+    @keyframes rotation {
+        from {
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+        }
+        50% {
+            transform: rotate(0deg);
+            -webkit-transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+        }
+    }
+
+    .mod-orient-layer__desc {
+        margin-top: 20px;
+        font-size: 15px;
+        color: #fff;
+    }
+    /*wap端横竖屏=======end*/
+    </style>
+</head>
+
+<body>
+    <!--横竖屏监测-->
+    <div class="mod-orient-layer">
+        <div class="mod-orient-layer__content">
+            <i class="icon mod-orient-layer__icon-orient"></i>
+            <div class="mod-orient-layer__desc">为了更好的体验，请使用竖屏浏览</div>
+        </div>
+    </div>
+    <script>
+        //判断横屏、竖屏
+        window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+            var orientLayer = document.querySelector(".mod-orient-layer");
+            if (window.orientation === 180 || window.orientation === 0) {
+                console.log("竖屏");
+                orientLayer.style.display="none";
+            }
+            if (window.orientation === 90 || window.orientation === -90) {
+                console.log("横屏");
+                orientLayer.style.display="block";
+            }
+        }, false);
+        if (window.orientation === 90 || window.orientation === -90) {
+            console.log("横屏");
+            orientLayer.style.display="block";
+        }
+        //判断当前设备类型
+        var browser = {
+            versions: function() {
+                var u = navigator.userAgent,
+                    app = navigator.appVersion;
+                return { //
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                    android: !!u.match(/Android/i), //安卓终端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    weixin: !!u.match(/MicroMessenger/i), //微信
+                    weibo: !!u.match(/WeiBo/i), //微博
+                    iPad: !!u.match(/iPad/i), //iPad
+                    windows: !u.match(/(iPhone|iPad|Android|ios)/i) && !u.match(/AppleWebKit.*Mobile.*/) //pc平台
+                };
+            }(),
+        }
+        //PC
+        if (browser.versions.windows) { 
+            document.querySelector(".mod-orient-layer").style.display="block";
+            document.querySelector(".mod-orient-layer__icon-orient").style.display="none";
+            document.querySelector(".mod-orient-layer__desc").innerHTML="这是PC";
+        }
+        console.log("移动终端: " + browser.versions.mobile + " \nios终端: " + browser.versions.ios + " \nandroid终端: " + browser.versions.android + " \niPad: " + browser.versions.iPad + " \nPC: " + browser.versions.windows + "\n微信：" + browser.versions.weixin);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script src="https://cdn.bootcss.com/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <button class="clickTest">提交</button>
+    <script>
+    $(function() {
+        var count = 0,
+            flag = null;
+        $(".clickTest").click(function() {
+            doClick();
+        });
+        function doClick() {
+            if (count == 0) {
+                console.log("提交成功");
+                count = 61;
+                forCount();
+                flag = setInterval(forCount, 1000);
+            }
+        }
+        function forCount() {
+            if (count == 1) {
+                var flag1 = clearInterval(flag);
+                $(".clickTest").text("提交").attr("disabled", false);
+                count=0;
+            } else {
+                count--;
+                $(".clickTest").text("还剩：" + count + "秒").attr("disabled", true);
+            }
+        }
+    });
+    </script>
+</body>
+
+</html>

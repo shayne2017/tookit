@@ -1,0 +1,40 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=750,user-scalable=no,target-densitydpi=device-dpi">
+	<title></title>
+  <link rel="stylesheet" href="css/index.css" type="text/css">
+</head>
+<body>
+	<div class="content">
+    
+     <p class="btn">播放视频</p>
+
+ 
+
+      <!-- 视频播放窗口 iframe -->
+      <section class="page  video_Box dis_n">
+          <div class="page video_black"></div>
+          <div class="videoMain pos"></div>
+      </section>
+
+      
+  </div>  <!-- content 结束 -->
+  
+
+  <script type="text/javascript" src="js/index_video.js"></script>
+
+  <script type="text/javascript">
+
+  oVIDEO.initVideos(); // 创建所有视频 iframe 
+
+  // 点击 播放 第一段视频
+  document.querySelector(".btn").addEventListener("touchstart",function(){
+     oVIDEO.playVideo('V01');
+  },false);
+  
+  </script>
+  
+</body>
+</html>

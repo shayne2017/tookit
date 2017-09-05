@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=750,user-scalable=no">
+<!--<script src="js/vocnsole.min.js"></script>-->
+<head>
+    <meta charset="UTF-8">
+    <title>欧莱雅X李宇春,闪耀来袭!</title>
+    <style>
+        button {
+            border: 1px solid #ccc;
+            width: 100px;
+            height: 50px;
+        }
+        .video_wrap{
+            display: none;
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height:100%;
+        }
+        .video_cover{
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height:100%;
+            background: #000;
+        }
+        #myVideo{
+            position: absolute;
+            top:50%;
+            left:0;
+            width: 100%;
+            height:auto;
+            transform: translateY(-50%);
+            -webkit-transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+<div class="video_wrap">
+    <div class="video_cover"></div>
+    <video id="myVideo" preload="auto" x-webkit-airplay="true" x5-video-player-type="h5" webkit-playsinline="true" playsinline="true" style="object-fit: fill;" width="750" height="300" type="video/mp4">
+        <source src="http://www.w3school.com.cn/example/html5/mov_bbb.mp4" type='video/mp4'>
+        <source src="http://www.w3school.com.cn/example/html5/mov_bbb.ogg" type='video/ogg'>
+        <source src="http://www.w3school.com.cn/example/html5/mov_bbb.webm" type='video/webm'>
+    </video>
+</div>
+
+<button class="play1">播放</button>
+<button class="play2">暂停</button>
+<button class="play3">重新加载</button>
+<button class="play4">返回播放进度</button>
+<button class="play5">返回视频播放网络状态</button>
+</body>
+
+
+<script>
+    var thisVideo = document.querySelector("#myVideo");
+    var play1 = document.querySelector(".play1");
+    var closeVideo = document.querySelector(".video_cover");
+    play1.addEventListener("click",function () {
+        document.querySelector(".video_wrap").style.display="block";
+        thisVideo.play();
+    });
+    closeVideo.addEventListener("touchstart",function () {
+        document.querySelector(".video_wrap").style.display="none";
+        thisVideo.pause();
+    });
+    thisVideo.addEventListener("ended",function () {
+        document.querySelector(".video_wrap").style.display="none";
+    });
+</script>
+</html>

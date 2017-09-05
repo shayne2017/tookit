@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>pace.js</title>
+    <script src="https://cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+    <script src="pace.js"></script>
+    <link rel="stylesheet" href="pace.css">
+    <style>
+    .my-page {
+        display: none;
+    }
+    </style>
+    <script>
+    paceOptions = {
+        ajax: false, // disabled
+        document: true, // disabled
+        eventLag: true, // disabled
+        elements: {
+            selectors: ['.my-page']
+        }
+    };
+    Pace.on("start", function() {
+        console.log("开始加载");
+    });
+    Pace.on('done', function() {
+        console.log("资源加载完成");
+        $(".my-page").show();
+    });
+    </script>
+</head>
+<div class="my-page">
+    <img src="http://wxdisneytown.comeyes.com/File/Images/201745105226564.png" alt="">
+    <img src="http://wxdisneytown.comeyes.com/File/Images/20174512717734.png" alt="">
+    <img src="http://wxdisneytown.comeyes.com/File/Images/201755193925497.png" alt="">
+    <img src="http://wxdisneytown.comeyes.com/File/Images/201745105734953.png" alt="">
+</div>
+<script>
+if (navigator.onLine) {
+    console.log('联网了');
+} else {
+    alert('没有网络啦，请刷新');
+}
+</script>
+
+</html>

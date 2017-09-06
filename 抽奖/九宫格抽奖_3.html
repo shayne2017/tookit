@@ -53,6 +53,7 @@
         <div class="lottery lottery6">6</div>
         <div class="lottery lottery5">5</div>
     </div>
+    <audio src="183.wav" id="music"></audio>
     <script>
     /*
      *
@@ -66,22 +67,22 @@
         // 参数定义=============================================begin
 
         //sudoku函数各参数定义如下：
-        var circle = 26; //旋转的基础圈数
-        var rotateSpeed = 80; //初始旋转速度，建议为大于20的整数
-        var lowSpeed = 0.4; //加速截止点，0~1之间的小数，应小于highSpeed
-        var highSpeed = 0.92; //减速开始点，0~1之间的小数，应大于lowSpeed
-        var addRateSpeed = 3 //加速速率，应大于0
-        var loseRateSpeed = 60 //减速速率，应大于0
+        var circle = 25; //旋转的基础圈数
+        var rotateSpeed = 250; //初始旋转速度，建议为大于20的整数
+        var lowSpeed = 0.5; //加速截止点，0~1之间的小数，应小于highSpeed
+        var highSpeed = 0.95; //减速开始点，0~1之间的小数，应大于lowSpeed
+        var addRateSpeed = 10 //加速速率，应大于0
+        var loseRateSpeed = 70 //减速速率，应大于0
         var prize1 = 0.01; //一等奖概率，0~1之间的小数
         var prize2 = 0.05; //二等奖概率，0~1之间的小数
         var prize3 = 0.1; //三等奖概率，0~1之间的小数
         var start0 = false; //设置每次抽奖是否从第一个开始，true为从第一个开始，false则从当前位置开始
         var maxLottery = 3; //设置最大抽奖次数
-        // winPrice = 3; //当从接口获取中奖物品时，可设置此值，如为本地版，请注释此行
+        var winPrice = 7; //当从接口获取中奖物品时，可设置此值，默认为0，奖品随机获取
 
         // 参数定义=============================================end 
-        
-        sudoku(circle, rotateSpeed, lowSpeed, highSpeed, addRateSpeed, loseRateSpeed, prize1, prize2, prize3, start0, maxLottery);  
+
+        sudoku(circle, rotateSpeed, lowSpeed, highSpeed, addRateSpeed, loseRateSpeed, prize1, prize2, prize3, start0, maxLottery, winPrice);  
         function sudoku(circle, rotateSpeed, lowSpeed, highSpeed, addRateSpeed, loseRateSpeed, prize1, prize2, prize3, start0, maxLottery, winPrice) {
             var circle_resert = circle; //重置基础圈数
             var startPosition = 1; //抽奖的起始位置
@@ -98,6 +99,7 @@
             var myRewards; //中奖的产品序号
 
             function getRewards() { //抽奖主逻辑
+
                 currentPoint++;
                 starting = true; //设置为true，表示正在抽奖中，此时禁用抽奖按钮
                 if (currentPoint <= (countPoint * lowSpeed)) { //加速
@@ -132,16 +134,16 @@
                         if (start0 == true) {
                             i = 0;
                         }
-                        clearInterval(t);
                         alert("恭喜，你获得了" + myRewards + "等奖");
                         return;
                     }
                 }
+                 playMusic.pause();
                 t = setTimeout(getRewards, rotateSpeed); //如果还没有转到最后一个，自调用
             }
 
             function chance(a, b, c) { //中奖概率
-                if (typeof winPrice == "undefined") {
+                if (winPrice == 0) {
                     myRewards = Math.floor(Math.random() * 1000) + 1;
                     a = a * 1000;
                     b = b * 1000;
@@ -163,7 +165,10 @@
                 getRewards(); //进行抽奖
             }
             $(".start").on("click", function() { //抽奖入口
+
                 if (!starting) { //如果当前不在抽奖进行中或者还未抽奖
+                                    var playMusic = document.querySelector("#music");
+                playMusic.play();
                     if (userLottery < maxLottery) {
                         userLottery++;
                         chance(prize1, prize2, prize3);
